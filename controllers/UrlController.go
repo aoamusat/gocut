@@ -22,12 +22,12 @@ func FetchUrl(ctx *gin.Context) {
 func CreateShortUrl(ctx *gin.Context) {
 	var RequestBody utils.UrlRequestBody
 	if err := ctx.ShouldBindJSON(&RequestBody); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "long_url is required"})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	// Create Short URL
-	ShortUrl, ShortCode := utils.GenerateShortUrl(RequestBody.LongUrl, 6)
+	ShortUrl, ShortCode := utils.GenerateShortUrl(RequestBody.LongUrl, 5)
 
 	url := models.URL{
 		LongUrl:   RequestBody.LongUrl,
