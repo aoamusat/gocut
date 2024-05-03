@@ -1,16 +1,29 @@
 package main
 
 import (
-  "net/http"
-  "github.com/gin-gonic/gin"
+	"net/http"
+	"os"
+
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
+var _ = godotenv.Load()
+
 func main() {
-  r := gin.Default()
+	env := os.Getenv("GIN_MODE")
 
-  r.GET("/", func(c *gin.Context) {
-    c.JSON(http.StatusOK, gin.H{"data": "hello world"})    
-  })
+	if env == "release" {
+		gin.SetMode("release")
+	} else {
+		gin.SetMode("debug")
+	}
 
-  r.Run()
+	Router := gin.Default()
+
+	Router.GET("/", func(context *gin.Context) {
+		context.JSON(http.StatusOK, gin.H{"data": "hello world: " + env})
+	})
+
+	Router.Run("localhost:5050")
 }
