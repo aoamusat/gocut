@@ -20,5 +20,5 @@ func main() {
 	Router.GET("/:short_code", controllers.FetchUrl)
 	Router.POST("/create", controllers.CreateShortUrl)
 
-	Router.Run("localhost:" + os.Getenv("PORT"))
+	Router.Run(":" + os.Getenv("PORT"))
 }
