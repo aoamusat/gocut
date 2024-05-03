@@ -1,29 +1,24 @@
 package main
 
 import (
-	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"olayml.xyz/gocut/controllers"
+	"olayml.xyz/gocut/database/models"
 )
 
 var _ = godotenv.Load()
 
 func main() {
-	env := os.Getenv("GIN_MODE")
-
-	if env == "release" {
-		gin.SetMode("release")
-	} else {
-		gin.SetMode("debug")
-	}
+	models.ConnectDatabase()
 
 	Router := gin.Default()
 
-	Router.GET("/", func(context *gin.Context) {
-		context.JSON(http.StatusOK, gin.H{"data": "hello world: " + env})
-	})
+	Router.GET("/ping", controllers.Ping)
+	Router.GET("/:short_code", controllers.FetchUrl)
+	Router.POST("/create", controllers.CreateShortUrl)
 
-	Router.Run("localhost:5050")
+	Router.Run("localhost:" + os.Getenv("PORT"))
 }
