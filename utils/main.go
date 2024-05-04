@@ -8,7 +8,7 @@ import (
 )
 
 type UrlRequestBody struct {
-	LongUrl string `json:"long_url" binding:"required"`
+	LongUrl string `json:"long_url" binding:"required,url"`
 }
 
 func GenerateRandomString(length uint) string {

@@ -1,15 +1,19 @@
 package models
 
 import (
-	"gorm.io/driver/sqlite"
+	"os"
+
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var DbClient *gorm.DB
 
 func ConnectDatabase() {
-
-	database, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	database, err := gorm.Open(postgres.New(postgres.Config{
+		DSN:                  os.Getenv("POSTGRES_DSN"),
+		PreferSimpleProtocol: true, // disables implicit prepared statement usage
+	}), &gorm.Config{})
 
 	if err != nil {
 		panic("Failed to connect to database!")

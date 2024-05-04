@@ -41,7 +41,7 @@ func CreateShortUrl(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{"data": url})
+	ctx.JSON(http.StatusCreated, &url)
 }
 
 func Ping(ctx *gin.Context) {
