@@ -9,6 +9,7 @@ import (
 	"olayml.xyz/gocut/database/models"
 )
 
+// Load environment variables
 var _ = godotenv.Load()
 
 func main() {
